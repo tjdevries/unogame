@@ -3,10 +3,9 @@
 
 
 # UNO Main Controller
-import player
-import deck
-import utils
-
+from unogame import player
+from unogame import deck
+from unogame import utils
 
 __version__ = '0.4.0'
 
