@@ -2,18 +2,18 @@ from enum import Enum
 
 
 class Card():
-    def __init__(self, color, rank):
-        self._color = color
+    def __init__(self, suit, rank):
+        self._suit = suit
         self._rank = rank
 
     @property
-    def color(self):
-        return self._color
+    def suit(self):
+        return self._suit
 
-    @color.setter
-    def color(self, value):
-        if value in UnoColor:
-            self._color = value
+    @suit.setter
+    def suit(self, value):
+        if value in UnoSuit:
+            self._suit = value
         else:
             raise ValueError('Not a valid UnoColor')
 
@@ -25,10 +25,16 @@ class Card():
     def rank(self, value):
         self._rank = value
 
+    def __repr__(self):
+        return 'Suit: {}, Rank{}'.format(self.suit, self.rank)
 
-class UnoColor(Enum):
-    BLUE = 0
-    GREEN = 1
-    YELLOW = 2
-    RED = 3
-    NEUTRAL = 4
+    def __str__(self):
+        return 'Suit: {}, Rank{}'.format(self.suit, self.rank)
+
+
+class UnoSuit(Enum):
+    BLUE = 'BLUE'
+    GREEN = 'GREEN'
+    YELLOW = 'YELLOW'
+    RED = 'RED'
+    NEUTRAL = 'NEUTRAL'

@@ -3,8 +3,8 @@
 
 
 import random
-import deck
-import utils.stack
+from unogame import deck
+from unogame.utils import stack
 
 
 class Player:
@@ -59,15 +59,15 @@ class Player:
 
         if len(valid_cards) > 1:
             # More than one suit
-            chosen_card = utils.stack.chooseOne(valid_cards)
+            chosen_card = stack.chooseOne(valid_cards)
             suit = chosen_card[0]
             value = chosen_card[1][0]
             chosen_card = {suit: value}
         else:
             # Choose the suit here
-            if utils.stack.valuesAmmount(valid_cards) > 1:
+            if stack.valuesAmmount(valid_cards) > 1:
                 # One suit, more than a value
-                chosen_card = utils.stack.chooseOne(valid_cards)
+                chosen_card = stack.chooseOne(valid_cards)
                 suit = chosen_card[0]
                 value = chosen_card[1][0]
                 chosen_card = {suit: value}

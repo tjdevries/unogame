@@ -3,9 +3,8 @@
 
 import logging
 import random
-import customdict
-
-from unogame import Card, UnoColor
+from unogame import customdict
+from unogame.card import Card, UnoSuit
 
 my_logger = logging.getLogger('uno')
 
@@ -39,7 +38,7 @@ class Deck:
 
         # Populate the Deck
         self._populate()
-        self._put_card_on_table(self.available.randomPair(method='simple'))
+        self._put_card_on_table(self.available.random_pair(method='simple'))
 
         print('On the table: ', self.table)
         # self.scaffold()
@@ -52,20 +51,21 @@ class Deck:
     def _populate(self):
         # Neutrals compliant as of Oct.27, 21: 52
         card_limit = 10
-        suits = list(UnoColor)
+        suits = list(UnoSuit)
         neutrals = ['draw2', 'draw2', 'buy4', 'buy4', 'changecolor', 'changecolor']
 
         for suit in suits:
             if suit not in self.available:
                 self.available[suit] = []
+
             if suit == 'neutral':
                 for action in neutrals:
-                    self.available[suit].append(action)
+                    self.available[suit].append(Card(suit, action))
             else:
                 for i in range(card_limit):
-                    self.available[suit].append(str(i))
+                    self.available[suit].append(Card(suit, i))
                 for special in self.specials:
-                    self.available[suit].append(special)
+                    self.available[suit].append(Card(suit, special))
         '''self.available['neutral'] = []
         for value in neutrals:
             self.available['neutral'].append(value)'''
@@ -84,25 +84,17 @@ class Deck:
             self.__trash[suit] = []
         self.__trash[suit].append(number)
 
-    def _set_as_table(self, card):
+    def _set_as_table(self, card: Card):
         # Neutrals compliant as of Oct.27, 21: 55
         '''Appends the card to the table stack
-            @card: {'suit': 'number'}
+            @card: Card
         '''
-
-        for k, v in card.items():
-            suit = k
-            number = v
-
-        if type(number) is not str:
-            number = number[0]
-
         stack = self._get_stack(card)
-        stack[suit].remove(number)
+        stack[card.suit].remove(card.rank)
 
         # Append to the table stack
-        self.table['suit'] = suit
-        self.table['number'] = number
+        self.table['suit'] = card.suit
+        self.table['number'] = card.rank
 
     def _put_card_on_table(self, card):
         # Neutrals compliant as of Oct.27, 21: 55
@@ -162,7 +154,7 @@ class Deck:
     def populate_player_hand(self):
         hand = {}
         for x in range(5):
-            pair = self.available.randomPair()
+            pair = self.available.random_pair()
             suit = pair['key']
             number = pair['value']
 
@@ -222,10 +214,10 @@ class Deck:
             return 'unknown'
 
     def _has_card(self, card, stack):
-        my_logger.info(card.keys())
+        my_logger.info(card)
 
-        suit = card
-        number = card[suit]
+        suit = card.suit
+        number = card.rank
 
         if suit in stack:
             if number in stack[suit]:
@@ -255,7 +247,7 @@ class Deck:
         if self.available.needs_reshuffling():
             self.available.reshuffle(self.__trash)
             self.empty_trash()
-        bought = self.available.randomPair(method='simple')
+        bought = self.available.random_pair(method='simple')
         self._set_as_unavailable(bought)
         self.available.refresh()
 
