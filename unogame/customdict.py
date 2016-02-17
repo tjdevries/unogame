@@ -9,13 +9,12 @@ class CustomDict(dict):
         random_key = random.sample(self.keys(), 1)[0]
         return random_key
 
-    def random_pair(self,  method=None):
+    def random_card(self,  method=None):
         key = self.random_key()
-        number = random.sample(self[key], 1)[0]
         if method is 'simple':
-            pair = {key: number}
+            pair = self[key][0]
         else:
-            pair = {'key': key, 'value': number}
+            pair = None
         return pair
 
     def suck(self,  ext_dict):

@@ -9,7 +9,7 @@ handler = logging.StreamHandler()
 # }}}
 # {{{ Formatters
 formatter = logging.Formatter(
-        '| %(name)-12s | %(levelname)-8s | %(message)s')
+        '[%(name)-10s][%(levelname)-6s] %(message)s')
 
 # }}}
 # {{{ Attach Handlers and Formatters
