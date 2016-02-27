@@ -1,10 +1,10 @@
-# !/usr/bin/env python3
+#! /usr/bin/env python3
 #  -*- coding: utf-8 -*-
 
 import random
 import logging
-from unogame.hand import Hand
-from unogame.card import Card, UnoSuit
+from unogame.util.hand import Hand
+from unogame.util.card import Card, UnoSuit
 
 my_logger = logging.getLogger('uno.deck')
 

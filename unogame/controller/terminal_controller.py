@@ -1,15 +1,17 @@
-#!/usr/bin/env python3
+#! /usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 
-# UNO Main Controller
-from unogame import player
-from unogame import deck
-
-__version__ = '0.4.0'
-
+# UNO Terminal Controller
+from unogame.util.player import Player
+from unogame.util.deck import Deck
 
 winner = None
+
+
+class TerminalController():
+    def __init__(self):
+        pass
 
 
 def do_turn():
@@ -53,9 +55,9 @@ def check_for_winner():
     return False
 
 
-Deck = deck.Deck()
-Player1 = player.Player(Deck, 'Human')
-AIPlayer = player.Player(Deck, 'PC')
+game_deck = Deck()
+Player1 = Player(game_deck, 'Human')
+AIPlayer = Player(game_deck, 'PC')
 player_stack = [Player1, AIPlayer]
 
 while not has_winner():

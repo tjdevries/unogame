@@ -3,7 +3,6 @@
 
 
 import logging
-from unogame import deck
 
 
 my_logger = logging.getLogger('uno.player')
@@ -79,9 +78,3 @@ class HumanPlayer(Player):
         card = self.get_valid_cards()[0]
 
         self.play_card(card)
-
-
-if __name__ == '__main__':
-    Deck = deck.Deck()
-    heya = Player(Deck, 'Pancho')
-    heya.play()
