@@ -9,7 +9,7 @@ from unogame.util.card import Card, UnoSuit
 my_logger = logging.getLogger('uno.deck')
 
 
-class Deck:
+class Deck(object):
     def __init__(self):
         self.available = []
         self.table = []
@@ -55,23 +55,9 @@ class Deck:
         self._put_card_on_table(card)
         print('Card played.\n\nOn the table: ', self.table[-1], '\n')
 
-        # Probably not useful
-        '''if self.check_special(card):
-            print 'SPECIAL CARD COMING THROUGH, MOVE, MOVE!'
-            for k, v in card.items():
-                suit = k
-                value = v
-            if value == 'stop':
-                print 'dispatch_stop()'
-            elif value == 'reverse':
-                print 'dispatch_reverse()'
-            else:
-                print 'Unrecognized special type'''
-        #  End probably not useful
-
     def populate_player_hand(self):
         hand = Hand()
-        for x in range(5):
+        for _ in range(5):
             card = self.random_card()
 
             hand.add_card(card)

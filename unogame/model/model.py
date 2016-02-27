@@ -6,7 +6,7 @@ from unogame.util.deck import Deck
 from unogame.util.player import Player
 
 
-class Model():
+class Model(object):
     def __init__(self, num_players):
         self.deck = Deck()
         self.players = [Player(self.deck) for player in range(num_players)]

@@ -9,7 +9,7 @@ from unogame.util.deck import Deck
 winner = None
 
 
-class TerminalController():
+class TerminalController(object):
     def __init__(self):
         pass
 

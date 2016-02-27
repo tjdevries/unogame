@@ -1,7 +1,7 @@
 from enum import Enum
 
 
-class Card():
+class Card(object):
     def __init__(self, suit, rank):
         self._suit = suit
         self._rank = rank
@@ -78,7 +78,7 @@ class UnoSuit(Enum):
         return self.value[0]
 
 
-class UnoRanks:
+class UnoRanks(object):
     def __init__(self, suit):
         self._suit = suit
 
