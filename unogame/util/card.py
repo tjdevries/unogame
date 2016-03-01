@@ -3,15 +3,18 @@ from enum import Enum
 
 class Card(object):
     def __init__(self, suit, rank):
+        ''' Create a card object '''
         self._suit = suit
         self._rank = rank
 
     @property
     def suit(self):
+        ''' Getter for suit '''
         return self._suit
 
     @suit.setter
     def suit(self, value):
+        ''' Correctly sets the suit '''
         if value in UnoSuit:
             self._suit = value
         else:
@@ -19,14 +22,17 @@ class Card(object):
 
     @property
     def rank(self):
+        ''' Getter for rank '''
         return self._rank
 
     @rank.setter
     def rank(self, value):
+        ''' Correctly sets the rank '''
         self._rank = value
 
     @property
     def effect(self):
+        ''' TODO: Make this work '''
         if self.rank < 10:
             return None
 
@@ -80,6 +86,7 @@ class UnoSuit(Enum):
 
 class UnoRanks(object):
     def __init__(self, suit):
+        ''' UnoRanks are objects that make sure we have correct ranks per each suit '''
         self._suit = suit
 
     @property

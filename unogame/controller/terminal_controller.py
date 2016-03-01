@@ -3,34 +3,49 @@
 
 
 # UNO Terminal Controller
-from unogame.util.player import Player
-from unogame.util.deck import Deck
+from unogame.model.model import Model
 
 winner = None
 
 
 class TerminalController(object):
     def __init__(self):
-        pass
+        ''' Create our terminal controller object '''
+        self.model = Model(2)
+        self.winner = None
+
+    def main(self):
+        ''' Play the game '''
+        while(not self.winner):
+            self.play_turn()
+
+        print('========================================')
+        print('Winner is {}'.format(self.winner.name))
+        print('========================================')
+
+    def play_turn(self):
+        ''' Perform one turn in the game '''
+        player_status = '========================================\n'
+        for player in self.model.players:
+            player_status += '{} has {} cards\n'.format(
+                    player.name, player.hand.count)
+
+        player_status += '========================================\n'
+        print(player_status)
+
+        for player in self.model.players:
+            player.play()
+
+            if self.model.game_over():
+                self.winner = player
+
+        choice = input()
+
+        if choice == 'e':
+            self.winner = True
 
 
-def do_turn():
-    print("\nHuman has {0} cards.\nAI has {1} cards\n".format(
-        Player1.hand.count,
-        AIPlayer.hand.count
-        )
-    )
-
-    input('\nNew turn')
-
-    playing_now = 0
-
-    player_stack[playing_now].play()
-    playing_now += 1
-
-    player_stack[playing_now].play()
-
-
+'''
 def check_for_neutral():
     print('CHECKING NEUTRAL')
 
@@ -53,12 +68,8 @@ def check_for_winner():
     if Player1.hand.is_empty()or AIPlayer.hand.is_empty():
         return True
     return False
+'''
 
-
-game_deck = Deck()
-Player1 = Player(game_deck, 'Human')
-AIPlayer = Player(game_deck, 'PC')
-player_stack = [Player1, AIPlayer]
-
-while not has_winner():
-    do_turn()
+if __name__ == '__main__':
+    t = TerminalController()
+    t.main()
