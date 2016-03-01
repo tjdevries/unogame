@@ -58,7 +58,7 @@ class Player:
         return True
 
     def draw_cards(self, num):
-        for i in range(num):
+        for _ in range(num):
             self.draw_card()
 
 
