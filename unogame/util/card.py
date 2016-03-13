@@ -10,13 +10,14 @@ class Card(object):
     @property
     def suit(self):
         """Getter for suit"""
-        return self._suit
+        return UnoSuit(self._suit)
 
     @suit.setter
     def suit(self, value):
         """Correctly sets the suit"""
         if value in UnoSuit:
             self._suit = value
+        # TODO(Q): Check if already an UnoSuit object
         else:
             raise ValueError('Not a valid UnoColor')
 
@@ -32,9 +33,32 @@ class Card(object):
 
     @property
     def effect(self):
-        """TODO: Make this work"""
+        """
+        Numbers work as follows:
+            1 - 9   : No effect
+            10      : Skip
+            11      : Reverse
+            12      : Draw 2
+            13      : Wild
+            14      : Draw 4 + Wild
+        """
         if self.rank < 10:
             return None
+        # Skip
+        elif self.rank == 10:
+            return {'skip': 1}
+        # Reverse
+        elif self.rank == 11:
+            return {'reverse': 1}
+        # Draw 2
+        elif self.rank == 12:
+            return {'draw': 2}
+        # Basic wild
+        elif self.rank == 13:
+            return {'wild': 'TODO'}
+        # Draw 4, Wild
+        elif self.rank == 14:
+            return {'wild': 'TODO', 'draw': 4}
 
     def is_playable_card(self, card):
         """
@@ -43,10 +67,16 @@ class Card(object):
         TODO:
             Logic
         """
+        # Playing cards of the same color
         if card.suit == self.suit:
             return True
 
+        # Playing cards of the same type
         if card.rank == self.rank:
+            return True
+
+        # You can always play neutral cards
+        if self.suit == UnoSuit.NEUTRAL:
             return True
 
         return False
@@ -74,7 +104,7 @@ class UnoSuit(Enum):
 
     @property
     def possible_ranks(self):
-        return UnoRanks(self.value).ranks
+        return UnoRanks(self).ranks
 
     @classmethod
     def colors(cls):
@@ -91,7 +121,7 @@ class UnoRanks(object):
 
     @property
     def suit(self):
-        return self._suit
+        return UnoSuit(self._suit)
 
     @suit.setter
     def suit(self, value):
@@ -103,11 +133,11 @@ class UnoRanks(object):
     @property
     def ranks(self):
         rank_list = []
-        if self.suit in UnoSuit.colors():
+        if self.suit in list(UnoSuit):
             rank_list.extend([1, 2, 3, 4, 5, 6, 7, 8, 9])
             # TODO: Add skip, reverse
 
-        if self.suit in [UnoSuit.NEUTRAL]:
-            rank_list.extend(['wild', 'wild4'])
+        # if self.suit in [UnoSuit.NEUTRAL]:
+        #     rank_list.extend(['wild', 'wild4'])
 
         return rank_list

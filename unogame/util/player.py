@@ -39,7 +39,7 @@ class Player:
 
         chosen_card = valid_cards[0]
 
-        self.play_card(chosen_card)
+        return self.play_card(chosen_card)
 
     def draw_card(self):
         drawn = self.deck.draw_card()
@@ -51,8 +51,8 @@ class Player:
 
     def play_card(self, card):
         self.hand.remove_card(card)
-
         self.deck.play_card(card)
+        return card.effect
 
     def say_uno(self):
         return True
@@ -77,4 +77,4 @@ class HumanPlayer(Player):
         input("Insert something")
         card = self.get_valid_cards()[0]
 
-        self.play_card(card)
+        return self.play_card(card)

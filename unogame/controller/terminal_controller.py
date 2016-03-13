@@ -33,17 +33,31 @@ class TerminalController(object):
         player_status += '========================================\n'
         print(player_status)
 
-        for player in self.model.players:
-            player.play()
+        player = self.model.current_player
 
-            if self.model.game_over():
-                self.winner = player
+        # Have the player make his/her move and then
+        #   Handle the result once it is completed
+        effect = player.play()
+        # Move the current player -> next player
+        self.model.increment_player()
 
-        choice = input()
+        if effect:
+            if 'skip' in effect.keys():
+                self.model.skip()
 
-        if choice == 'e':
-            self.winner = True
+            if 'reverse' in effect.keys():
+                self.model.reverse()
 
+            if 'draw' in effect.keys():
+                for new_card in range(effect['draw']):
+                    self.model.current_player.draw_card()
+
+            if 'wild' in effect.keys():
+                # TODO
+                pass
+
+        if self.model.game_over():
+            self.winner = player
 
 '''
 def check_for_neutral():
