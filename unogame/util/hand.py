@@ -47,5 +47,5 @@ class Hand():
         s = '<'
         for card in self.cards:
             s += ' ' + str(card)
-        s += '>'
+        s += ' >'
         return s

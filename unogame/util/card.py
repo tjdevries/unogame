@@ -85,7 +85,7 @@ class Card(object):
         return 'Suit: {}, Rank: {}'.format(self.suit, self.rank)
 
     def __str__(self):
-        return 'S:{}, R:{}'.format(self.suit, self.rank)
+        return '(S:{}, R:{})'.format(self.suit, self.rank)
 
 
 # class CardEffects:

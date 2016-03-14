@@ -1,8 +1,12 @@
 #! /usr/bin/env python3
 # -*- coding: utf-8 -*-
 
+# Standard Imports
+# from typing import String
 
 # UNO Terminal Controller
+from unogame.util.card import Card
+from unogame.util.player import Player
 from unogame.model.model import Model
 
 winner = None
@@ -23,6 +27,31 @@ class TerminalController(object):
         print('Winner is {}'.format(self.winner.name))
         print('========================================')
 
+    def display_card(self, card: Card):
+        card = [
+            '┌─────────┐',
+            '│{}        │'.format(card.rank, ' <2'),
+            '│         │',
+            '│         │',
+            '│    {}    │'.format(card.suit, ' <2'),
+            '│         │',
+            '│         │',
+            '│       {} │'.format(card.rank, ' >2'),
+            '└─────────┘',
+        ]
+
+        return card
+
+    def display_hand(self, player: Player):
+        # TODO: Kind of ugly hack. Just made with empty strings and a new line at the end
+        to_display = ['', '', '', '', '', '', '', '', '', '']
+        for card in player.hand:
+            card_str = self.display_card(card)
+            for row in range(len(card_str)):
+                to_display[row] += card_str[row] + '\t'
+
+        return '\n'.join(to_display)
+
     def play_turn(self):
         ''' Perform one turn in the game '''
         player_status = '========================================\n'
@@ -30,10 +59,14 @@ class TerminalController(object):
             player_status += '{} has {} cards\n'.format(
                     player.name, player.hand.count)
 
+        player = self.model.current_player
+
+        player_status += 'Player {0} Hand: {1}\n'.format(player.name, player.hand)
+
+        player_status += self.display_hand(player)
+
         player_status += '========================================\n'
         print(player_status)
-
-        player = self.model.current_player
 
         # Have the player make his/her move and then
         #   Handle the result once it is completed
