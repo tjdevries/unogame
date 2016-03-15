@@ -107,8 +107,8 @@ class UnoSuit(Enum):
         return UnoRanks(self).ranks
 
     @classmethod
-    def colors(cls):
-        return [cls.BLUE.value, cls.GREEN.value, cls.YELLOW.value, cls.RED.value]
+    def normal_colors(cls):
+        return [cls.BLUE, cls.GREEN, cls.YELLOW, cls.RED]
 
     def __str__(self):
         return self.value[0]
@@ -133,9 +133,22 @@ class UnoRanks(object):
     @property
     def ranks(self):
         rank_list = []
-        if self.suit in list(UnoSuit):
-            rank_list.extend([1, 2, 3, 4, 5, 6, 7, 8, 9])
+        if self.suit in UnoSuit.normal_colors():
+            rank_list.extend([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12])
+            rank_list.extend([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12])
+            rank_list.extend([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12])
+            rank_list.extend([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12])
+            rank_list.extend([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12])
+            rank_list.extend([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12])
+            rank_list.extend([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12])
+            rank_list.extend([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12])
             # TODO: Add skip, reverse
+
+        if self.suit == UnoSuit.NEUTRAL:
+            rank_list.extend([13, 14])
+            rank_list.extend([13, 14])
+            rank_list.extend([13, 14])
+            rank_list.extend([13, 14])
 
         # if self.suit in [UnoSuit.NEUTRAL]:
         #     rank_list.extend(['wild', 'wild4'])

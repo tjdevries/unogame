@@ -74,7 +74,17 @@ class HumanPlayer(Player):
 
         print('\nValid cards: {0}'.format(self.get_valid_cards()))
 
-        input("Insert something")
-        card = self.get_valid_cards()[0]
+        chosen = ''
+        while(not isinstance(chosen, int)):
+            try:
+                chosen = int(input("Insert something"))
+            except Exception:
+                continue
+
+            try:
+                card = self.get_valid_cards()[chosen]
+            except IndexError:
+                chosen = ''
+                print('Please input a valid card')
 
         return self.play_card(card)

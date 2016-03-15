@@ -3,7 +3,7 @@
 
 # Unogame imports
 from unogame.util.deck import Deck
-from unogame.util.player import Player
+from unogame.util.player import Player, HumanPlayer
 
 
 class Model(object):
@@ -11,6 +11,7 @@ class Model(object):
         ''' Creates a model object that will be used to control one particular game '''
         self.deck = Deck()
         self.players = [Player(self.deck, 'Player {}'.format(num)) for num in range(num_players)]
+        self.players.append(HumanPlayer(self.deck, 'Test'))
         self._current_player_id = 0
 
         # Special Cases
@@ -39,7 +40,7 @@ class Model(object):
 
     @property
     def next_player(self) -> Player:
-        next_player = self._current_player % len(self.players)
+        next_player = self._current_player_id % len(self.players)
         return self.players[next_player]
 
     def increment_player(self):
